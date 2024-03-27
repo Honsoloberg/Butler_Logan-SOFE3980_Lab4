@@ -30,11 +30,10 @@ public class Binary
 		//beg has the index of the first non zero digit in the number
 		this.number=number.substring(beg); // exclude the trailing zeros if any
 		// uncomment the following code
-		
+
 		if(this.number=="") { // replace empty strings with a single zero
 			this.number="0";
 		}
-		
     }
 	/**
 	* Return the binary value of the variable
@@ -45,6 +44,37 @@ public class Binary
 	{
 		return this.number;
 	}
+
+	/**
+	 * Removes any training zeros at the beginning of the binary number String
+	 * 
+	 */
+	private void removeZeros(){
+		// remove any trailing zeros
+		int beg;
+		for (beg = 0; beg < number.length(); beg++) {
+			if (number.charAt(beg)!='0')
+				break;
+		}
+		//beg has the index of the first non zero digit in the number
+		this.number=number.substring(beg); // exclude the trailing zeros if any
+		// uncomment the following code
+
+		if(this.number=="") { // replace empty strings with a single zero
+			this.number="0";
+		}
+	}
+
+	/**
+	 * Sets a new value of the binary number String stored in "number" variable.
+	 * 
+	 * @param value A Binary number String
+	 */
+	public void setValue(String value){
+		this.number = value; //assign new value to the Binary String variable "number"
+		this.removeZeros(); // Call removeZeros()
+	}
+
 	/**
 	* Adding two binary variables. For more information, visit <a href="https://www.wikihow.com/Add-Binary-Numbers"> Add-Binary-Numbers </a>.
 	*
@@ -79,4 +109,93 @@ public class Binary
 		return result;
 		
 	}
+
+	/**
+	* Performing a Binary OR operation on 2 distinct Binary numbers
+	*
+	* @param num1 The first Binary Number
+	* @param num2 The second Binary Number
+	* @return A binary object that contains the bitwise OR operation of <i>num1</i> OR <i>num2</i>
+	*/
+	public static Binary ORop(Binary num1, Binary num2)
+    {
+        // Find the length of the two binary numbers
+        int len1 = num1.number.length();
+        int len2 = num2.number.length();
+
+        // Determine the maximum length among the two
+        int maxLength = Math.max(len1, len2);
+
+        // Create arrays to hold the binary digits, padded with leading zeros if necessary
+
+        char[] binary1 = String.format("%" + maxLength + "s", num1.number).replace(' ', '0').toCharArray();
+        char[] binary2 = String.format("%" + maxLength + "s", num2.number).replace(' ', '0').toCharArray();
+
+        // Perform bitwise OR operation
+        String result = "";
+        for (int i = 0; i < maxLength; i++) {
+            result += (binary1[i] == '1' || binary2[i] == '1') ? '1' : '0';
+        }
+
+        return new Binary(result);
+    }
+
+	/**
+	* Performing a Binary AND operation on 2 distinct Binary numbers
+	*
+	* @param num1 The first Binary Number
+	* @param num2 The second Binary Number
+	* @return A binary object that contains the bitwise AND operation of <i>num1</i> OR <i>num2</i>
+	*/
+    public static Binary ANDop(Binary num1, Binary num2)
+    {
+        // Find the length of the two binary numbers
+        int len1 = num1.number.length();
+        int len2 = num2.number.length();
+
+        // Determine the maximum length among the two
+        int maxLength = Math.max(len1, len2);
+
+        // Create arrays to hold the binary digits, padded with leading zeros if necessary
+
+        char[] binary1 = String.format("%" + maxLength + "s", num1.number).replace(' ', '0').toCharArray();
+        char[] binary2 = String.format("%" + maxLength + "s", num2.number).replace(' ', '0').toCharArray();
+
+        // Perform bitwise AND operation
+        String result = "";
+        for (int i = 0; i < maxLength; i++) {
+            result += (binary1[i] == '1' && binary2[i] == '1') ? '1' : '0';
+        }
+
+        return new Binary(result);
+    }
+
+	/**
+	* Performing Binary Multiplication with 2 distinct Binary Numbers
+	*
+	* @param adder The Binary Adder
+	* @param multiplicand The Binary Multiplicand
+	* @return A Binary object that contains the result of a binary multiplication of 2 binary number <i>adder * multiplicand</i>
+	*/
+	public static Binary multiply(Binary operand1, Binary multiplicand) {
+
+        Binary result = new Binary("0");
+
+		Binary adder = new Binary(operand1.getValue());
+
+        //For each 'bit' in the multiplicand try adding the adder to the result
+        for(int i = multiplicand.getValue().length()-1; i >= 0; i--) {
+            //Add the adder to result
+            if (multiplicand.getValue().charAt(i) == '1') {
+                result.setValue(Binary.add(result, adder).getValue());
+
+            } 
+            //Shift adder left one bit
+			if(i>0){
+				adder.setValue(adder.getValue() + "0");
+			}
+        }
+
+        return result;
+    }
 }	
