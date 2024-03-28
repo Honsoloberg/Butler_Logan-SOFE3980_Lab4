@@ -22,8 +22,8 @@ pipeline {
     }
     stage ('Deploy') {
       steps {
-        sh 'docker build -t northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4/binarycalculator .'
-        sh 'docker push northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4/binarycalculator'
+        sh '/builder/google-cloud-sdk/bin/gcloud docker build -t northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4/binarycalculator .'
+        sh '/builder/google-cloud-sdk/bin/gcloud docker push northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4/binarycalculator'
         sh 'kubectl create deployment binarycalculator-deployment --image northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4/binarycalculator --port=8080'
         sh 'kubectl expose deployment binarycalculator-deployment --type=LoadBalancer --name=binarycalculator-service'
       }
