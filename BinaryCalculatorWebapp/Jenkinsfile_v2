@@ -61,7 +61,8 @@ spec:
     stage('Build and push image with Container Builder') {
       steps {
         container('gcloud') {
-          sh "/builder/google-cloud-sdk/bin/gcloud builds submit -t ${IMAGE_TAG} ./BinaryCalculatorWebapp/"
+          sh "/builder/google-cloud-sdk/bin/gcloud docker build -t northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4 ."
+	  sh "/builder/google-cloud-sdk/bin/gcloud docker push northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4"
         }
       }
     }
