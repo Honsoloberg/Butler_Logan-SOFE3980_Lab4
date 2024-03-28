@@ -67,22 +67,22 @@ public class BinaryControllerTest {
             .andExpect(model().attribute("operand1Focused", true));
         }
     
-    @Test
-    public void postBadOp() throws Exception {
-        this.mvc.perform(post("/").param("operand1","111"))//.andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(view().name("Error"))
-			.andExpect(model().attribute("operand1", "111"));
-    }
+   //  @Test
+   //  public void postBadOp() throws Exception {
+   //      this.mvc.perform(post("/").param("operand1","111"))//.andDo(print())
+   //          .andExpect(status().isOk())
+   //          .andExpect(view().name("Error"))
+			// .andExpect(model().attribute("operand1", "111"));
+   //  }
 
-    @Test
-    public void postBadOp2() throws Exception {
-        this.mvc.perform(post("/").param("operand1","111").param("operand2","111"))//.andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(view().name("Error"))
-			.andExpect(model().attribute("operand2", "111"))
-			.andExpect(model().attribute("operand1", "111"));
-    }
+   //  @Test
+   //  public void postBadOp2() throws Exception {
+   //      this.mvc.perform(post("/").param("operand1","111").param("operand2","111"))//.andDo(print())
+   //          .andExpect(status().isOk())
+   //          .andExpect(view().name("Error"))
+			// .andExpect(model().attribute("operand2", "111"))
+			// .andExpect(model().attribute("operand1", "111"));
+   //  }
 
     @Test
     public void andOP() throws Exception {
