@@ -14,10 +14,9 @@ pipeline {
         sh 'mvn package -DskipTests -f ./BinaryCalculatorWebapp/pom.xml'
       }
     }
-    stage ('Build and Push Docker') {
+    stage ('Build Docker') {
       steps {
         sh 'docker build -t binarycalculator:image .'
-        sh 'docker push '
       }
     }
     stage ('Deploy Docker'){
