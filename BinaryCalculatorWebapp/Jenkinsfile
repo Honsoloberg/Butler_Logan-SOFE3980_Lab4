@@ -16,13 +16,13 @@ pipeline {
     }
     stage ('Build and Push Docker') {
       steps {
-        sh 'docker build -t northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4/binarycalculator .'
-        sh 'docker push northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4/binarycalculator'
+        sh 'docker build -t binarycalculator:image .'
+        sh 'docker push '
       }
     }
     stage ('Deploy Docker'){
       steps {
-        sh 'kubectl create deployment binarycalculator-deployment --image northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4/binarycalculator --port=8000'
+        sh 'kubectl create deployment binarycalculator:image --port=8000'
         sh 'kubectl expose deployment binarycalculator-deployment --type=LoadBalancer --name=binarycalculator-service'
       }
     }
