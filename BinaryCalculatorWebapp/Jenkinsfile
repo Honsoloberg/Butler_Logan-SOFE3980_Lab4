@@ -7,6 +7,12 @@ pipeline {
     stage ('Init') {
       steps {
         sh 'echo "Start of Job"'
+        sh 'ls -la'
+      }
+    }
+    stage ('test') {
+      steps {
+        sh 'mvn clean test -f ./BinaryCalculatorWebapp/pom.xml'
       }
     }
     stage ('build') {
@@ -14,15 +20,9 @@ pipeline {
         sh 'mvn package -DskipTests -f ./BinaryCalculatorWebapp/pom.xml'
       }
     }
-    stage ('Build Docker') {
+    stage ('Deploy') {
       steps {
-        sh 'docker build -t BinaryCalculatorWebapp .'
-      }
-    }
-    stage ('Deploy Docker'){
-      steps {
-        sh 'kubectl create deployment binarycalculator:image --port=8000'
-        sh 'kubectl expose deployment binarycalculator-deployment --type=LoadBalancer --name=binarycalculator-service'
+        sh 'echo "bye bye"'
       }
     }
   }
