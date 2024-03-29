@@ -16,7 +16,7 @@ pipeline {
     }
     stage ('Build Docker') {
       steps {
-        sh 'docker build -t BinaryCalculatorWebapp\ .'
+        sh 'docker build -t ./BinaryCalculatorWebapp .'
       }
     }
     stage ('Deploy Docker'){
