@@ -2,12 +2,12 @@ pipeline {
   environment {
     //PROJECT = "REPLACE_WITH_YOUR_PROJECT_ID"
 	PROJECT = "lab-deliverable-4-cicd"
-    APP_NAME = "binary-calculator2"
+    APP_NAME = "binarycalculator"
 	//CLUSTER = "REPLACE_WITH_YOUR_CLUSTER_NAME"
     CLUSTER = "sofe3980u"
     CLUSTER_ZONE = "northamerica-northeast1-b"
     IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}"
-    JENKINS_CRED = "lab-deliverable-4-cicd"
+    JENKINS_CRED = "green-tract-379622"
   }
   
 agent {
@@ -61,8 +61,7 @@ spec:
     stage('Build and push image with Container Builder') {
       steps {
         container('gcloud') {
-          sh "docker build -t northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4 ."
-	  sh "docker push northamerica-northeast2-docker.pkg.dev/lab-deliverable-4-cicd/sofe3980u-lab4"
+          sh "/builder/google-cloud-sdk/bin/gcloud builds submit -t ${IMAGE_TAG} ./BinaryCalculatorWebapp/"
         }
       }
     }
