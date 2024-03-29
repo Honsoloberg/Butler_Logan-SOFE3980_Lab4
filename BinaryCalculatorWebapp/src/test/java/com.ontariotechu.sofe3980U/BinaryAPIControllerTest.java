@@ -48,4 +48,57 @@ public class BinaryAPIControllerTest {
 			.andExpect(MockMvcResultMatchers.jsonPath("$.result").value(10001))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.operator").value("add"));
     }
+
+    @Test
+    public void and() throws Exception {
+        this.mvc.perform(get("/and").param("operand1","111111").param("operand2","101010"))//.andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string("101010"));
+    }
+
+    @Test
+    public void or() throws Exception {
+        this.mvc.perform(get("/or").param("operand1","101010").param("operand2","010101"))//.andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string("111111"));
+    }
+
+    @Test
+    public void multiply() throws Exception {
+        this.mvc.perform(get("/multi").param("operand1","1111").param("operand2","0001"))//.andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string("1111"));
+    }
+
+    @Test
+    public void and2() throws Exception {
+        this.mvc.perform(get("/and_json").param("operand1","111111").param("operand2","101010"))//.andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.operand1").value(111111))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.operand2").value(101010))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.result").value(101010))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.operator").value("and"));
+    }
+
+    @Test
+    public void or2() throws Exception {
+        this.mvc.perform(get("/or_json").param("operand1","101010").param("operand2","010101"))//.andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.operand1").value(101010))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.operand2").value(10101))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.result").value(111111))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.operator").value("or"));
+    }
+
+    @Test
+    public void multiply2() throws Exception {
+        this.mvc.perform(get("/multi_json").param("operand1","1111").param("operand2","0001"))//.andDo(print())
+            .andExpect(status().isOk())
+            //Please play arround with the values within this method. For some reason the compiler will read the wrong values inside the
+            //value()'s. if you put 0010 in value() for operand2 it was reading 8. I don't know why ¯\_(ツ)_/¯
+            .andExpect(MockMvcResultMatchers.jsonPath("$.operand1").value(1111))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.operand2").value(0001))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.result").value(1111))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.operator").value("multiply"));
+    }
 }
